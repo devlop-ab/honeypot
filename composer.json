@@ -1,0 +1,25 @@
+{
+    "name": "devlop/honeypot",
+    "description": "Honeypot form component and service for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johan Rosenson",
+            "email": "johan@devlop.se"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Devlop\\Honeypot\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Devlop\\Honeypot\\HoneypotServiceProvider"
+            ]
+        }
+    }
+}
