@@ -1,6 +1,6 @@
 {
     "name": "devlop/honeypot",
-    "description": "Simple Honeypot for Laravel FormRequests",
+    "description": "Simple Honeypot made for Laravel FormRequest",
     "type": "library",
     "license": "MIT",
     "authors": [

@@ -3,6 +3,6 @@
     <a href="https://github.com/devlop-ab/honeypot/blob/master/LICENSE.md"><img src="https://img.shields.io/packagist/l/devlop/honeypot" alt="License"></a>
 </p>
 
-# Json
+# Honeypot
 
-Simple JSON wrapper for better experience working with json data
+Simple Honeypot made for Laravel FormRequest
