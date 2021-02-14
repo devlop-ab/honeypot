@@ -27,7 +27,7 @@ trait WithHoneypot
     }
 
     /**
-     * If the honeypot was triggered
+     * If the request triggered the honeypot
      */
     public function triggeredHoneypot() : bool
     {
