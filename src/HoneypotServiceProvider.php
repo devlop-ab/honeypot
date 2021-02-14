@@ -73,6 +73,6 @@ final class HoneypotServiceProvider extends ServiceProvider
      */
     private function generateInputName(string $applicationName) : string
     {
-        return 'email-' . md5($applicationName);
+        return 'email_' . substr(md5($applicationName), 0, 10);
     }
 }
