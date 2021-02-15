@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Devlop\Honeypot;
 
 use Devlop\Honeypot\HoneypotComponent;
+use Devlop\Honeypot\WithHoneypot;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,20 @@ final class HoneypotServiceProvider extends ServiceProvider
             $name = $config['input-name'] ?? $this->generateInputName($this->app['config']->get('app.name'));
 
             return new HoneypotService($name);
+        });
+
+        $this->app->afterResolving(FormRequest::class, function (FormRequest $request) : void {
+            if (! in_array(WithHoneypot::class, class_uses_recursive($request), true)) {
+                return;
+            }
+
+            if (! $request->triggeredHoneypot()) {
+                return;
+            }
+
+            $this->app['events']->dispatch(
+                new HoneypotTriggered($request->honeypotValue()),
+            );
         });
     }
 
