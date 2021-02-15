@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Devlop\Honeypot;
 
-// use Illuminate\Foundation\Events\Dispatchable;
-
 final class HoneypotTriggered
 {
-    // use Dispatchable;
-
     /**
      * The value of the triggered honeypot
      */
