@@ -7,7 +7,6 @@ namespace Devlop\Honeypot;
 use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 final class Honeypot
