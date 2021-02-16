@@ -4,18 +4,35 @@ declare(strict_types=1);
 
 namespace Devlop\Honeypot;
 
+use Devlop\Honeypot\Honeypot;
+use Devlop\Honeypot\HoneypotNotTriggeredRule;
 use Devlop\Honeypot\HoneypotServiceInterface;
+use Illuminate\Contracts\Validation\Rule;
 
 trait WithHoneypot
 {
-    public function withHoneypotRules(array $rules) : array
+    /**
+     * Add the honeytrap rules with the existing ruleset
+     *
+     * @return array<string,string|array<string|Rule>>
+     */
+    private function withHoneypot(array $rules) : array
     {
-        return array_merge($rules, [
-            $this->getHoneypotInputName() => [
-                'sometimes', // only check when present
-                'size:0', // must be empty
-            ],
-        ]);
+        return $rules + [
+            $this->getHoneypotInputName() => $this->honeypotRules(),
+        ];
+    }
+
+    /**
+     * Get the honeytrap rules
+     *
+     * @return array<Rule>
+     */
+    private function honeypotRules() : array
+    {
+        return [
+            new HoneypotNotTriggeredRule($this),
+        ];
     }
 
     /**
@@ -27,18 +44,10 @@ trait WithHoneypot
     }
 
     /**
-     * If the request triggered the honeypot
+     * Get the honeypot
      */
-    public function triggeredHoneypot() : bool
+    public function honeypot() : Honeypot
     {
-        return $this->honeypotValue() !== null;
-    }
-
-    /**
-     * Get the honeypot input value
-     */
-    public function honeypotValue() : ?string
-    {
-        return $this->input($this->getHoneypotInputName()) ?: null;
+        return new Honeypot($this, $this->getHoneypotInputName(), $this->getValidatorInstance());
     }
 }

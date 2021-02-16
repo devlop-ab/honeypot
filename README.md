@@ -5,7 +5,7 @@
 
 # Honeypot
 
-Simple Honeypot made for Laravel FormRequest
+Simple honeypot made for Laravel FormRequest
 
 # Todo
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Devlop\Honeypot;
 
 use Devlop\Honeypot\HoneypotComponent;
+use Devlop\Honeypot\HoneypotTriggeredEvent;
 use Devlop\Honeypot\WithHoneypot;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\FormRequest;
@@ -39,20 +40,6 @@ final class HoneypotServiceProvider extends ServiceProvider
 
             return new HoneypotService($name);
         });
-
-        $this->app->afterResolving(FormRequest::class, function (FormRequest $request) : void {
-            if (! in_array(WithHoneypot::class, class_uses_recursive($request), true)) {
-                return;
-            }
-
-            if (! $request->triggeredHoneypot()) {
-                return;
-            }
-
-            $this->app['events']->dispatch(
-                new HoneypotTriggered($request->honeypotValue()),
-            );
-        });
     }
 
     /**
@@ -74,6 +61,22 @@ final class HoneypotServiceProvider extends ServiceProvider
         Blade::components([
             HoneypotComponent::class => $config['component-name'],
         ]);
+
+        $this->app->resolving(FormRequest::class, function (FormRequest $request) : void {
+            if (! in_array(WithHoneypot::class, class_uses_recursive($request), true)) {
+                return;
+            }
+
+            $honeypot = $request->honeypot();
+
+            if (! $honeypot->triggered()) {
+                return;
+            }
+
+            $this->app['events']->dispatch(
+                new HoneypotTriggeredEvent($honeypot),
+            );
+        });
     }
 
     /**
