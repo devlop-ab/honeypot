@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Devlop\Honeypot;
 
 use Devlop\Honeypot\HoneypotComponent;
+use Devlop\Honeypot\HoneypotServiceInterface;
 use Devlop\Honeypot\HoneypotTriggeredEvent;
 use Devlop\Honeypot\WithHoneypot;
 use Illuminate\Contracts\Foundation\Application;
