@@ -64,7 +64,7 @@ final class HoneypotServiceProvider extends ServiceProvider
         ]);
 
         $this->app->resolving(FormRequest::class, function (FormRequest $request) : void {
-            if (! in_array(WithHoneypot::class, class_uses_recursive($request), true)) {
+            if (! in_array(WithHoneypot::class, class_uses($request), true)) {
                 return;
             }
 
