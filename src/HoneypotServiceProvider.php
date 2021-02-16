@@ -37,9 +37,9 @@ final class HoneypotServiceProvider extends ServiceProvider
         $this->app->singleton(HoneypotServiceInterface::class, function (Application $app) : HoneypotServiceInterface {
             $config = $this->app['config']->get('honeypot');
 
-            $name = $config['input-name'] ?? $this->generateInputName($this->app['config']->get('app.name'));
+            $inputName = $config['input-name'] ?? $this->generateInputName($this->app['config']->get('app.name'));
 
-            return new HoneypotService($name);
+            return new HoneypotService($inputName);
         });
     }
 
