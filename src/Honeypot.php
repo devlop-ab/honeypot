@@ -49,8 +49,6 @@ final class Honeypot
     {
         $value = Arr::get($this->request, $this->inputName) ?? '';
 
-        return 'something';
-
         return is_string($value)
             ? $value
             : 'invalid type: ' . get_debug_type($value);
