@@ -54,7 +54,7 @@ final class HoneypotServiceProvider extends ServiceProvider
             [
                 $this->getConfigPath() => config_path('honeypot.php'),
             ],
-            'config'
+            'config',
         );
 
         $config = $this->app['config']->get('honeypot');

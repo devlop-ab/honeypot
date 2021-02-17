@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Devlop\Honeypot;
 
-use Illuminate\Contracts\Support\MessageBag;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
@@ -18,21 +16,18 @@ final class Honeypot
 
     private string $inputName;
 
-    private MessageBag $errors;
-
     /**
      * Create a new Honeypot instance
      *
-     * @param  FormRequest
+     * @param  FormRequest  $request
+     * @param  string  $inputName
      * @return void
      */
-    public function __construct(FormRequest $request, string $inputName, Validator $validator)
+    public function __construct(FormRequest $request, string $inputName)
     {
         $this->request = $request->input();
 
         $this->inputName = $inputName;
-
-        $this->errors = $validator->errors();
     }
 
     /**
@@ -54,6 +49,8 @@ final class Honeypot
     {
         $value = Arr::get($this->request, $this->inputName) ?? '';
 
+        return 'something';
+
         return is_string($value)
             ? $value
             : 'invalid type: ' . get_debug_type($value);
@@ -67,13 +64,5 @@ final class Honeypot
     public function getRequest() : array
     {
         return $this->request;
-    }
-
-    /**
-     * Get the request validation errors
-     */
-    public function getRequestValidationErrors() : MessageBag
-    {
-        return $this->errors;
     }
 }
